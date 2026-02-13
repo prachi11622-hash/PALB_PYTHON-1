@@ -1,0 +1,122 @@
+# Find the maximum and minimum elements in the array
+arr = [12, 78, 34, 99, 5, 61]
+
+maximum = arr[0]
+minimum = arr[0]
+
+for num in arr:
+    if num > maximum:
+        maximum = num
+    if num < minimum:
+        minimum = num
+
+print(f"Maximum Element: {maximum}, Minimum Element: {minimum}")
+
+
+#  Reverse the array
+arr = [9, 8, 7, 6, 5]
+start = 0
+end = len(arr) - 1
+
+while start < end:
+    arr[start], arr[end] = arr[end], arr[start]
+    start += 1
+    end -= 1
+
+print("Reversed Array:", arr)
+
+
+#  Kth smallest element in the array
+arr = [25, 11, 7, 19, 42, 3, 17]
+k = 2
+
+arr_sorted = sorted(arr)
+print(f"{k}nd Smallest Element:", arr_sorted[k - 1])
+
+
+#  Union of two arrays
+a = [10, 20, 30, 40]
+b = [30, 50, 60, 10]
+
+union = list(set(a + b))
+print("Union of two arrays is:", union)
+
+
+# Largest element of the array
+arr = [45, 67, 12, 89, 34]
+largest = arr[0]
+
+for num in arr:
+    if num > largest:
+        largest = num
+
+print("Largest element is:", largest)
+
+
+#  Rotate array clockwise by one position
+arr = [11, 22, 33, 44, 55]
+last = arr.pop()
+arr.insert(0, last)
+
+print("Array after rotation:", arr)
+
+
+#  Maximum sum of subarray (Kadane's Algorithm)
+arr = [-2, 4, -1, 5, -3, 6]
+
+max_sum = arr[0]
+current_sum = arr[0]
+
+for i in range(1, len(arr)):
+    current_sum = max(arr[i], current_sum + arr[i])
+    max_sum = max(max_sum, current_sum)
+
+print("Maximum Subarray Sum:", max_sum)
+
+
+#  Return index of target value (Binary Search)
+arr = [2, 4, 6, 8, 10]
+target = 8
+
+left = 0
+right = len(arr) - 1
+
+while left <= right:
+    mid = (left + right) // 2
+    if arr[mid] == target:
+        print("Target found at index:", mid)
+        break
+    elif arr[mid] < target:
+        left = mid + 1
+    else:
+        right = mid - 1
+else:
+    print("Target should be inserted at index:", left)
+
+
+#  Two Sum Problem
+def two_sum(nums, target):
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if nums[i] + nums[j] == target:
+                return [i, j]
+    return []
+
+print("Two Sum Result:", two_sum([5, 1, 9, 7], 10))
+
+
+# Minimum number of jumps to reach end
+arr = [2, 3, 1, 1, 4]
+
+jumps = 0
+current_end = 0
+farthest = 0
+
+for i in range(len(arr) - 1):
+    farthest = max(farthest, i + arr[i])
+    if i == current_end:
+        jumps += 1
+        current_end = farthest
+
+print("Minimum number of jumps:", jumps)
