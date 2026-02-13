@@ -1,0 +1,166 @@
+#Kth Smallest Element
+def kth_smallest(arr, k):
+    return sorted(arr)[k - 1]
+
+arr1 = [18, 5, 42, 9, 27, 33]
+print("Kth Smallest:", kth_smallest(arr1, 2))
+
+
+#Minimize Maximum Difference
+def get_min_diff(arr, k):
+    arr.sort()
+    n = len(arr)
+
+    ans = arr[-1] - arr[0]
+    small = arr[0] + k
+    big = arr[-1] - k
+
+    if small > big:
+        small, big = big, small
+
+    for i in range(1, n - 1):
+        subtract = arr[i] - k
+        add = arr[i] + k
+
+        if subtract < 0:
+            continue
+
+        small = min(small, subtract)
+        big = max(big, add)
+
+        ans = min(ans, big - small)
+
+    return ans
+
+arr2 = [4, 15, 23, 8]
+print("Minimum Difference:", get_min_diff(arr2, 3))
+
+
+#Minimum Jumps to Reach End (Greedy)
+def min_jumps(arr):
+    n = len(arr)
+    if n <= 1:
+        return 0
+    if arr[0] == 0:
+        return -1
+
+    max_reach = arr[0]
+    step = arr[0]
+    jumps = 1
+
+    for i in range(1, n):
+        if i == n - 1:
+            return jumps
+
+        max_reach = max(max_reach, i + arr[i])
+        step -= 1
+
+        if step == 0:
+            jumps += 1
+            if i >= max_reach:
+                return -1
+            step = max_reach - i
+
+    return -1
+
+arr3 = [2, 3, 1, 1, 4]
+print("Minimum Jumps:", min_jumps(arr3))
+
+
+# Find Duplicate (Floyd’s Algorithm)
+def find_duplicate(nums):
+    slow = nums[0]
+    fast = nums[0]
+
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+
+    return slow
+
+arr4 = [1, 4, 6, 3, 2, 2]
+print("Duplicate Element:", find_duplicate(arr4))
+
+
+#Merge Two Sorted Arrays
+def merge_arrays(a, b):
+    merged = sorted(a + b)
+    return merged
+
+a = [1, 5, 9]
+b = [2, 3, 8]
+print("Merged Array:", merge_arrays(a, b))
+
+
+#Merge Intervals
+def merge_intervals(intervals):
+    intervals.sort(key=lambda x: x[0])
+    merged = []
+
+    for interval in intervals:
+        if not merged or merged[-1][1] < interval[0]:
+            merged.append(interval)
+        else:
+            merged[-1][1] = max(merged[-1][1], interval[1])
+
+    return merged
+
+intervals = [[1, 4], [2, 5], [7, 9]]
+print("Merged Intervals:", merge_intervals(intervals))
+
+
+#Triplet Sum
+def triplet_sum(arr, target):
+    arr.sort()
+    n = len(arr)
+
+    for i in range(n - 2):
+        left = i + 1
+        right = n - 1
+
+        while left < right:
+            total = arr[i] + arr[left] + arr[right]
+            if total == target:
+                return True
+            elif total < target:
+                left += 1
+            else:
+                right -= 1
+
+    return False
+
+arr7 = [5, 12, 3, 7, 9]
+print("Triplet Exists:", triplet_sum(arr7, 24))
+
+
+#Trapping Rainwater (Two Pointer Optimized)
+def trap_rainwater(arr):
+    left, right = 0, len(arr) - 1
+    left_max = right_max = 0
+    water = 0
+
+    while left <= right:
+        if arr[left] < arr[right]:
+            if arr[left] >= left_max:
+                left_max = arr[left]
+            else:
+                water += left_max - arr[left]
+            left += 1
+        else:
+            if arr[right] >= right_max:
+                right_max = arr[right]
+            else:
+                water += right_max - arr[right]
+            right -= 1
+
+    return water
+
+arr8 = [4, 2, 0, 3, 2, 5]
+print("Trapped Water:", trap_rainwater(arr8))
